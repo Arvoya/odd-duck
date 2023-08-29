@@ -36,7 +36,10 @@ main {
   }
   #Results h2 {
     font-size: x-large;
-    margin-bottom: 10%;
+  }
+
+  button {
+    margin-bottom: 30px;
   }
   
   ul {
