@@ -1,21 +1,5 @@
 'use strict';
 
-/**
- * DONE Create Constructor function
- * DONE Constructor properties: Name, File path, Time image has been shown
- * DONE User should be presented with 25 rounds of voting
- * DONE Create helper function that generates 3 unique product images from img directory
- * DONE Add a button with the text view results
- * DONE Keep track of number of times a product has been clicked 
- * DONE Attach Event listener to the section of the HTML page where the images are going to be displayed
- * DONE Once user clicks a product, generate three new products
- * DONE Create a property attached to the constructor function to track which products have been clicked.
- * DONE Every time it has been shown count it
- * TODO Update the count on the results section in HTML
- * TODO keep the rounds in a variable to allow the number to easily changed
- * TODO button when clicked list of all the products followed by the votes received, and the number of times seen for each. example "banana had 3 votes, and was seen 5 times."
-*/
-
 // *GLOBALS
 let imgarray = [];
 let votingRounds = 25;
