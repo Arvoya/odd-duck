@@ -5,6 +5,7 @@ let imgarray = [];
 let votingRounds = 25;
 
 
+
 // * DOM WINDOWS
 let lineUp = document.getElementById('lineUp');
 let img1 = document.getElementById('img1');
@@ -83,10 +84,37 @@ function imgClick(event) {
   }
   if (votingRounds === 0) {
     lineUp.removeEventListener('click', imgClick);
+
+
+
+
+    // * Local Data Storage
+
+    /**
+     * DONE Store `imagarray` into local storage as a formatted JSON string.
+     * DONE Track Total Votes & Total Views (use objects within array)
+     * DONE Display both within the Chart and Results table
+     * DONE Make sure the data persists across both browser refreshes and resets
+     * DONE Retrieve the products array from local storage use JSON.Parse()
+     * TODO BONUS - Send each item in the array back through the constructor function.
+    */
+
+    let stringImg = JSON.stringify(imgarray);
+    localStorage.setItem('totals', stringImg);
+
+
   }
 }
 
+
+
+
+
+
+
 function showResults() {
+
+  console.log('after: ', imgarray);
   if (votingRounds === 0){
     for (let i =0; i < imgarray.length; i++) {
       let results = document.createElement('li');
@@ -104,7 +132,12 @@ function showResults() {
     labelArray.push(imgarray[i].name);
     viewsArray.push(imgarray[i].displayCount);
     votesArray.push(imgarray[i].votes);
+    
+    
+    
+    
   }
+
 
 
 
@@ -133,31 +166,41 @@ function showResults() {
       }
     }
   });
-
 }
+
+
+
 // * EXECUTABLE CODE
-let bag = new Img ('bag');
-let banana = new Img('banana');
-let bathroom = new Img('bathroom');
-let boots = new Img('boots');
-let breakfast = new Img('breakfast');
-let bubblegum = new Img('bubblegum');
-let chair = new Img('chair');
-let cthulhu = new Img('cthulhu');
-let dogduck = new Img('dog-duck');
-let dragon = new Img('dragon');
-let pen = new Img('pen');
-let petsweep = new Img('pet-sweep');
-let scissors = new Img('scissors');
-let shark = new Img('shark');
-let sweep = new Img('sweep', 'png');
-let tauntaun = new Img('tauntaun');
-let unicorn = new Img('unicorn');
-let watercan = new Img('water-can');
-let wineglass = new Img('wine-glass');
+let retrieveImg = localStorage.getItem('totals');
+let parsedImg = JSON.parse(retrieveImg);
 
-imgarray.push(bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, watercan, wineglass);
+if(retrieveImg) {
+  imgarray = parsedImg;
+} else {
 
-renderImgs();
-lineUp.addEventListener('click', imgClick);
+  let bag = new Img ('bag');
+  let banana = new Img('banana');
+  let bathroom = new Img('bathroom');
+  let boots = new Img('boots');
+  let breakfast = new Img('breakfast');
+  let bubblegum = new Img('bubblegum');
+  let chair = new Img('chair');
+  let cthulhu = new Img('cthulhu');
+  let dogduck = new Img('dog-duck');
+  let dragon = new Img('dragon');
+  let pen = new Img('pen');
+  let petsweep = new Img('pet-sweep');
+  let scissors = new Img('scissors');
+  let shark = new Img('shark');
+  let sweep = new Img('sweep', 'png');
+  let tauntaun = new Img('tauntaun');
+  let unicorn = new Img('unicorn');
+  let watercan = new Img('water-can');
+  let wineglass = new Img('wine-glass');
+  
+  imgarray.push(bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, watercan, wineglass);
+}
+  
+  renderImgs();
+  lineUp.addEventListener('click', imgClick);
 resultBtn.addEventListener('click', showResults);
