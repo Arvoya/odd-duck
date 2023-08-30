@@ -17,7 +17,7 @@ h1 {
 main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr minmax(5px, 50px) 1fr;
+  grid-template-rows: 1fr minmax(5px, auto) 1fr;
 }
 
 #Results {

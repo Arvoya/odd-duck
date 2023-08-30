@@ -28,6 +28,7 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultBtn = document.getElementById('resultBtn');
 let resultList = document.getElementById('ResultsList');
+let chart = document.getElementById('chart');
 
 // * CONSTRUCTOR FUNCTIONS
 
@@ -45,19 +46,31 @@ function numGenerator() {
 }
 
 
+let imgHolder = [];
 function renderImgs() {
-  let img1Index = numGenerator();
-  let img2Index = numGenerator();
-  let img3Index = numGenerator();
-  while(img1Index === img2Index) {
-    img2Index = numGenerator();
+
+  while(imgHolder.length < 6) {
+    let num = numGenerator();
+    if (!imgHolder.includes(num)){
+      imgHolder.push(num);
+    }
   }
-  while(img1Index === img3Index) {
-    img3Index = numGenerator();
+
+  let img1Index = imgHolder.pop();
+  let img2Index = imgHolder.pop();
+  let img3Index = imgHolder.pop();
+
+
+  for(let i = -1; i <= imgHolder.length; i++) {
+    imgHolder.pop();
   }
-  while(img2Index === img3Index) {
-    img2Index = numGenerator();
-  }
+
+
+
+  imgHolder.unshift(img1Index);
+  imgHolder.unshift(img2Index);
+  imgHolder.unshift(img3Index);
+
 
   img1.src = imgarray[img1Index].image;
   img1.title = imgarray[img1Index].name;
@@ -98,9 +111,46 @@ function showResults() {
     }
     resultBtn.removeEventListener('click', showResults);
   }
+
+  let labelArray = [];
+  let viewsArray = [];
+  let votesArray = [];
+
+  for (let i = 0; i < imgarray.length; i++){
+    labelArray.push(imgarray[i].name);
+    viewsArray.push(imgarray[i].displayCount);
+    votesArray.push(imgarray[i].votes);
+  }
+
+
+
+  new Chart(chart, {
+    type: 'bar',
+    data: {
+      labels: labelArray,
+      datasets: [{
+        label: '# of Votes',
+        data: votesArray,
+        borderWidth: 1,
+        backgroundColor: 'red'
+      },
+      {
+        label: 'Views',
+        data: viewsArray,
+        borderWidth: 1,
+        backgroundColor: 'blue'
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 }
-
-
 // * EXECUTABLE CODE
 let bag = new Img ('bag');
 let banana = new Img('banana');
