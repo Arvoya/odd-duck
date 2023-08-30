@@ -1,21 +1,5 @@
 'use strict';
 
-/**
- * DONE Create Constructor function
- * DONE Constructor properties: Name, File path, Time image has been shown
- * DONE User should be presented with 25 rounds of voting
- * DONE Create helper function that generates 3 unique product images from img directory
- * DONE Add a button with the text view results
- * DONE Keep track of number of times a product has been clicked 
- * DONE Attach Event listener to the section of the HTML page where the images are going to be displayed
- * DONE Once user clicks a product, generate three new products
- * DONE Create a property attached to the constructor function to track which products have been clicked.
- * DONE Every time it has been shown count it
- * TODO Update the count on the results section in HTML
- * TODO keep the rounds in a variable to allow the number to easily changed
- * TODO button when clicked list of all the products followed by the votes received, and the number of times seen for each. example "banana had 3 votes, and was seen 5 times."
-*/
-
 // *GLOBALS
 let imgarray = [];
 let votingRounds = 25;
@@ -28,6 +12,7 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultBtn = document.getElementById('resultBtn');
 let resultList = document.getElementById('ResultsList');
+let chart = document.getElementById('chart');
 
 // * CONSTRUCTOR FUNCTIONS
 
@@ -45,19 +30,31 @@ function numGenerator() {
 }
 
 
+let imgHolder = [];
 function renderImgs() {
-  let img1Index = numGenerator();
-  let img2Index = numGenerator();
-  let img3Index = numGenerator();
-  while(img1Index === img2Index) {
-    img2Index = numGenerator();
+
+  while(imgHolder.length < 6) {
+    let num = numGenerator();
+    if (!imgHolder.includes(num)){
+      imgHolder.push(num);
+    }
   }
-  while(img1Index === img3Index) {
-    img3Index = numGenerator();
+
+  let img1Index = imgHolder.pop();
+  let img2Index = imgHolder.pop();
+  let img3Index = imgHolder.pop();
+
+
+  for(let i = -1; i <= imgHolder.length; i++) {
+    imgHolder.pop();
   }
-  while(img2Index === img3Index) {
-    img2Index = numGenerator();
-  }
+
+
+
+  imgHolder.unshift(img1Index);
+  imgHolder.unshift(img2Index);
+  imgHolder.unshift(img3Index);
+
 
   img1.src = imgarray[img1Index].image;
   img1.title = imgarray[img1Index].name;
@@ -98,9 +95,46 @@ function showResults() {
     }
     resultBtn.removeEventListener('click', showResults);
   }
+
+  let labelArray = [];
+  let viewsArray = [];
+  let votesArray = [];
+
+  for (let i = 0; i < imgarray.length; i++){
+    labelArray.push(imgarray[i].name);
+    viewsArray.push(imgarray[i].displayCount);
+    votesArray.push(imgarray[i].votes);
+  }
+
+
+
+  new Chart(chart, {
+    type: 'bar',
+    data: {
+      labels: labelArray,
+      datasets: [{
+        label: '# of Votes',
+        data: votesArray,
+        borderWidth: 1,
+        backgroundColor: 'red'
+      },
+      {
+        label: 'Views',
+        data: viewsArray,
+        borderWidth: 1,
+        backgroundColor: 'blue'
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 }
-
-
 // * EXECUTABLE CODE
 let bag = new Img ('bag');
 let banana = new Img('banana');
