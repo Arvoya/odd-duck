@@ -149,13 +149,13 @@ function showResults() {
         label: '# of Votes',
         data: votesArray,
         borderWidth: 1,
-        backgroundColor: 'red'
+        backgroundColor: '#e2afbf'
       },
       {
         label: 'Views',
         data: viewsArray,
         borderWidth: 1,
-        backgroundColor: 'blue'
+        backgroundColor: '#b8ddd8'
       }]
     },
     options: {

@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
+
+
+
+/* 
+* Pink - #e2afbf
+* Blue - #b8ddd8
+* Light Pink - #fcf3f3
+* Dark Brown - #533724
+
+*/
+
 * {
   font-size: larger;
+  font-family: 'Dosis', sans-serif;
+  background-color: #fcf3f3;
 }
 
 header {
@@ -8,9 +22,14 @@ header {
   align-items: center;
 }
 
+#logo img {
+  height: 120px;
+}
 
 h1 {
-  font-size: xx-large;
+  font-family: 'Dosis', sans-serif;
+  font-size: 90px;
+  font-weight: 800;
   padding-left: 5px;
 }
 
